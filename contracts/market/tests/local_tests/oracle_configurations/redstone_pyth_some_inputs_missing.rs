@@ -593,8 +593,13 @@ async fn redstone_pyth_some_inputs_missing() {
     // Sumbit tx
     let submitted_tx = mutli_call_handler.submit().await.unwrap();
 
+    // Wait a bit for the transaction to be committed
+    tokio::time::sleep(tokio::time::Duration::from_millis(50)).await;
+
     // Wait for response
     let _: CallResponse<((), ())> = submitted_tx.response().await.unwrap();
+
+    // Verify the transaction was successful by checking the balance
 
     // Check
     let balance: u64 = bob
