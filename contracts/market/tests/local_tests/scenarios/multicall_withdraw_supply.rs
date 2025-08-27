@@ -144,8 +144,11 @@ async fn multicall_withdraw_supply_test() {
         .add_call(supply_base_call)
         .with_variable_output_policy(VariableOutputPolicy::Exactly(2));
 
-    // Submit tx
+    // Sumbit tx
     let submitted_tx = multi_call_handler.submit().await.unwrap();
+
+    // Wait a bit for the transaction to be committed
+    tokio::time::sleep(tokio::time::Duration::from_millis(50)).await;
 
     // Wait for response
     let _: CallResponse<((), ())> = submitted_tx.response().await.unwrap();

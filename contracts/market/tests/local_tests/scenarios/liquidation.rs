@@ -345,6 +345,9 @@ async fn absorb_and_liquidate() {
     // Sumbit tx
     let submitted_tx = mutli_call_handler.submit().await.unwrap();
 
+    // Wait a bit for the transaction to be committed
+    tokio::time::sleep(tokio::time::Duration::from_millis(50)).await;
+
     // Wait for response
     let _: CallResponse<((), ())> = submitted_tx.response().await.unwrap();
     let alice_balance: u64 = alice
@@ -697,6 +700,9 @@ async fn all_assets_liquidated() {
 
     // Sumbit tx
     let submitted_tx = mutli_call_handler.submit().await.unwrap();
+
+    // Wait a bit for the transaction to be committed
+    tokio::time::sleep(tokio::time::Duration::from_millis(50)).await;
 
     // Wait for response
     let _: CallResponse<((), ())> = submitted_tx.response().await.unwrap();
